@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,44 +29,42 @@ class Statistics2 {
   private long getSales(String month) {
     // SalesDaoクラスをインスタンス化
     SalesDao2 dao = new SalesDao2();
-    // 年月を指定してItemを取得する
-    Item item = dao.select(month);
-    // Itemインスタンスのpriceフィールドの値を戻す
-    return item.price;
+    // 年月を指定して売り上げた商品を取得する
+    List<Item> items = dao.select(month);
+    // 全てのItemインスタンスのpriceの値を合算
+    return sum(items);
   }
 
   // 指定された年月の売上原価を戻す
   private long getCosts(String month) {
     // CostsDaoクラスをインスタンス化
     CostsDao2 dao = new CostsDao2();
-    // 年月を指定してItemを取得する
-    Item item = dao.select(month);
-    // Itemインスタンスのpriceフィールドの値を戻す
-    return item.price;
+    // 年月を指定して売り上げた商品の原価を取得する
+    List<Item> items = dao.select(month);
+    // 全てのItemインスタンスのpriceの値を合算
+    return sum(items);
+  }
+
+// Itemリストのpriceの値を全て合算するメソッド
+  public long sum(List<Item> items) {
+    // 戻り値
+    long res = 0;
+    // Itemインスタンスを全て取得する
+    for (Item item : items) {
+      // priceの値を加算
+      res += item.price;
+    }
+    // 戻り値を戻す
+    return res;
+  }
 }
 
 //売上金額を管理するクラス
 class SalesDao2 {
   // 仮データ
-  private Map<String, Integer> data;
-  // コンストラクタ
-  // SalesDao2() {
-  //   data = new HashMap<String, Long>();
-  //   data.put("2020/01", 1000);
-  //   data.put("2020/02", 1200);
-  //   data.put("2020/03", 1300);
-  //   data.put("2020/04", 1400);
-  //   data.put("2020/05", 500);
-  //   data.put("2020/06", 600);
-  //   data.put("2020/07", 700);
-  //   data.put("2020/08", 800);
-  //   data.put("2020/09", 900);
-  //   data.put("2020/10", 1000);
-  //   data.put("2020/11", 1100);
-  //   data.put("2020/12", 1200);
-  // }
+  private Map<String, List<Item>> data;
   // Itemインスタンスを戻す
-  Item select(String month) {
+  List<Item> select(String month) {
     return data.get(month);
   }
 }
@@ -72,14 +72,14 @@ class SalesDao2 {
 // 売上原価を管理するクラス
 class CostsDao2 {
   // 仮データ
-  private Map<String, Integer> data = StubCommon.getData(50);
+  private Map<String, List<Item>> data = StubCommon.getData(50);
   // Itemインスタンスを戻す
-  Item select(String month) {
+  List<Item> select(String month) {
     return data.get(month);
   }
 }
 
-// Itemインスタンス
+// 商品を表現したクラス
 class Item {
   long price;
   Item(long price) {
@@ -90,11 +90,15 @@ class Item {
 // 共通処理
 class StubCommon {
   // データを作成する共通メソッド
-  static Map<String, Item> getData(int seed) {
+  static Map<String, List<Item>> getData(int seed) {
     // 仮データの作成
-    Map<String, Item> data = new HashMap<String, Item>();
+    Map<String, List<Item>> data = new HashMap<String, List<Item>>();
     for (int i = 1; i <= 12; i++) {
-      data.put("2020/" + String.format("%02b", i), new Item(i * seed)); 
+      List<Item> items = new ArrayList<Item>();
+      for (int j = 1; j <= i; j++) {
+        items.add(new Item(i * seed));
+      }
+      data.put("2020/" + String.format("%02b", i), items); 
     }
     return data;
   }
