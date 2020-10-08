@@ -34,7 +34,7 @@ interface Database<T> {
   List<T> select();
 }
 
-class SalesDao implements Database<Sales> {
+class SalesDao3 implements Database<Sales> {
   public List<Sales> select() {
     // 仮データ
     return Arrays.asList(new Sales[] {new Sales("時計"), new Sales("PC")});
