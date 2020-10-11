@@ -1,9 +1,6 @@
 package kita;
 
 public class CoinCase {
-  // int type;
-  // int sheet;
-  // int totalPrice;
   private int Yen500 = 0;
   private int Yen100 = 0;
   private int Yen50 = 0;
@@ -12,8 +9,6 @@ public class CoinCase {
   private int Yen1 = 0;
 
   public void AddCoins(int kind, int count) {
-    // this.type = type;
-    // this.sheet = sheet;
     switch(kind) {
       case 500:
         Yen500 += count;
@@ -37,7 +32,6 @@ public class CoinCase {
   }
 
   public int GetCount(int kind) {
-    // return sheet;
     switch(kind) {
       case 500:
         return Yen500;
@@ -55,8 +49,29 @@ public class CoinCase {
     return 0;
   }
 
+  public int GetCount() {
+    return Yen500 + Yen100 + Yen50 + Yen10 + Yen5 + Yen1;
+  }
+
+  public int GetAmount(int kind) {
+    switch(kind) {
+      case 500:
+        return Yen500*500;
+      case 100:
+        return Yen100*100;
+      case 50:
+        return Yen50*50;
+      case 10:
+        return Yen10*10;
+      case 5:
+        return Yen5*5;
+      case 1:
+        return Yen1*1;
+    }
+    return 0;
+  }
+
   public int GetAmount() {
-    // return totalPrice;
     return (Yen500*500) + (Yen100*100) + (Yen50*50) + (Yen10*10) + (Yen5*5) + Yen1;
   }
 }
