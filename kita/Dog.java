@@ -18,6 +18,6 @@ class Dog {
   }
 
   public void ShowProfile() {
-    System.out.println(Breed + "で名前は" + Name + "、" + Age + "です。");
+    System.out.println(Breed + "で名前は" + Name + "、" + Age + "才です。");
   }
 }

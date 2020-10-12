@@ -6,5 +6,11 @@ public class Exercise {
     MyDog.SetName("ぽち");
     MyDog.SetAge(3);
     MyDog.ShowProfile();
+
+    Cat cat = new Cat();
+    cat.Name = "タマ";
+    cat.Age = 3;
+    cat.ShowProfile();
+    cat.sleep();
   }
 }
