@@ -12,11 +12,13 @@ public class Exercise {
     dog.Age = 3;
     dog.ShowProfile();
     dog.Run();
+    dog.Speak();
 
     Cat cat = new Cat();
     cat.Name = "タマ";
     cat.Age = 3;
     cat.ShowProfile();
     cat.sleep();
+    cat.Speak();
   }
 }
